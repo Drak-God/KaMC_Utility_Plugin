@@ -1,0 +1,42 @@
+name: KaMC_Utility_Plugin
+main: top.DrakGod.KaMCUP.Main
+version: 1.0.0
+api-version: 1.20.6
+description: 这是一个专门为KaMC打造的插件
+authors: [Drakgod]
+website: https://www.kamc.fun
+depend: [Essentials]
+
+commands:
+  kamcup:
+    description: KaMC实用插件主指令
+    usage: /kamcup <Commands>
+    permission: kamcup.commands.kamcup
+  uuid:
+    description: 获取一个玩家的uuid
+    usage: /uuid <Player>
+    permission: kamcup.commands.uuid
+  
+permissions:
+  kamcup.*:
+    description: 授予对所有kamcup命令的访问权限
+    default: op
+    children:
+      kamcup.admin: true
+  kamcup.admin:
+    description: 授予管理员权限
+    default: false
+    children:
+      kamcup.commands.*: true
+  kamcup.commands.*: 
+    description: 授予执行命令权限
+    default: false
+    children:
+      kamcup.commands.kamcup: true
+      kamcup.commands.uuid: true
+  kamcup.commands.kamcup:
+    description: 授予执行/kamcup权限
+    default: true
+  kamcup.commands.uuid:
+    description: 授予执行/uuid权限
+    default: false

@@ -10,27 +10,36 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import top.DrakGod.KaMCUP.Handlers.*;
 
 @SuppressWarnings("deprecation")
 public class Main extends JavaPlugin implements Global {
     public String Version;
 
+    public Commands Class_Commands;
+    public Listeners Class_Listeners;
+
     @Override
     public void onEnable() {
         Version = getDescription().getVersion();
-        Plugin_Log("INFO", "§1Ka§4MC§aUtility§bPlugin§6 §1v" + Version + " §a正在加载...");
+        Plugin_Log("INFO", "§dKaMC§aUtility§bPlugin §fv" + Version + " 正在加载...");
 
         Check_Data_Folder();
         if (!isEnabled()) {
             return;
         }
 
-        Plugin_Log("INFO", "§1Ka§4MC§b实用插件§a已启用!");
+        Class_Commands = new Commands();
+        Class_Commands.Register_Commands();
+
+        Class_Listeners = new Listeners();
+
+        Plugin_Log("INFO", "§dKaMC§a实用§b插件§a已启用!");
     }
 
     @Override
     public void onDisable() {
-        Plugin_Log("INFO", "§1Ka§4MC§b实用插件§4已禁用!");
+        Plugin_Log("INFO", "§dKaMC§a实用§b插件§4已禁用!");
     }
 
     public File Get_File() {

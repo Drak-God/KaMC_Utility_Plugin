@@ -61,7 +61,7 @@ public interface Global {
         } else if (Mode.equalsIgnoreCase("ERROR")) {
             Msg = "§c" + Msg;
         }
-        Console.sendMessage("§6[§1Ka§4MC§aUtility§bPlugin§6] " + Msg);
+        Console.sendMessage("§6[§dKaMC§aUtility§bPlugin§6] " + Msg);
     }
 
     public default YamlConfiguration Get_Data(String File_Name) {

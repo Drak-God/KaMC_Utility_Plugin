@@ -6,14 +6,17 @@ import org.bukkit.entity.Player;
 import top.DrakGod.KaMCUP.*;
 
 public class uuid implements KaMCCommand {
+    @Override
     public KaMCCommand Init() {
         return this;
     }
 
+    @Override
     public String Get_Command_Name() {
         return "uuid";
     }
 
+    @Override
     public boolean On_Command(Main Main, CommandSender Sender, String Label, String[] Args) {
         if (Args.length == 1) {
             Player player = Server.getPlayer(Args[0]);

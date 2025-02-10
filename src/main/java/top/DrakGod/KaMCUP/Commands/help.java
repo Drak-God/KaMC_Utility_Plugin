@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+
+import com.google.common.collect.Range;
 
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -20,6 +23,7 @@ public class help implements KaMCCommand {
     public HashMap<String, Command> Commands;
     public List<List<String>> Help_Pages;
 
+    @Override
     public KaMCCommand Init() {
         Main Main = Get_Main();
         Class_Commands = Main.Class_Commands;
@@ -27,10 +31,17 @@ public class help implements KaMCCommand {
         return this;
     }
 
+    @Override
     public String Get_Command_Name() {
         return "help";
     }
 
+    @Override
+    public List<String> On_TabComplete(Main Main, CommandSender Sender, String Label, String[] Args) {
+        return IntStream.rangeClosed(1, ).Get_List();
+    }
+
+    @Override
     public boolean On_Command(Main Main, CommandSender Sender, String Label, String[] Args) {
         Reload_Help_Pages(Sender);
 
@@ -51,7 +62,7 @@ public class help implements KaMCCommand {
             return true;
         }
 
-        Sender.sendMessage("§e------ ======= §dKaMC§bPlugin§6帮助 §e======= ------");
+        Sender.sendMessage("§e----- === " + Plugin_Name + "§6帮助 §e=== -----");
         Sender.sendMessage("§e====== ------ §6<>为必填 []为选填 §e------ ======");
         for (String Name : Help_Pages.get(Page_Number - 1)) {
             Command HelpCommand = Commands.get(Name);

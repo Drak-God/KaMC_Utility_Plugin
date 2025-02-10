@@ -1,6 +1,7 @@
 package top.DrakGod.KaMCUP.Commands;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.command.CommandSender;
 
@@ -10,6 +11,8 @@ public interface KaMCCommand extends Global {
     public KaMCCommand Init();
 
     public String Get_Command_Name();
+
+    public List<String> On_TabComplete(Main Main, CommandSender Sender, String Label, String[] Args);
 
     public boolean On_Command(Main Main, CommandSender Sender, String Label, String[] Args);
 

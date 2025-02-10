@@ -26,6 +26,7 @@ public class Commands implements CommandExecutor, Global {
             Command.setUsage((String) Value.get("usage"));
             Command.setAliases((List<String>) Value.get("aliases"));
             Command.setDescription((String) Value.get("description"));
+            Command.setTabCompleter(Main_Class.Class_TabCompleters);
             Command.setPermission("");
             Command.setExecutor(this);
 
@@ -36,8 +37,10 @@ public class Commands implements CommandExecutor, Global {
 
     public void Register_Commands() {
         Command_Classes = new HashMap<>();
-        new kamcup().Register_Command();
+        new car().Register_Command();
         new help().Register_Command();
+        new kamcup().Register_Command();
+        new uuid().Register_Command();
     }
 
     @Override

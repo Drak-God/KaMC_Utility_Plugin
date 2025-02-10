@@ -18,27 +18,31 @@ public class Main extends JavaPlugin implements Global {
 
     public Commands Class_Commands;
     public Listeners Class_Listeners;
+    public TabCompleters Class_TabCompleters;
 
     @Override
     public void onEnable() {
         Version = getDescription().getVersion();
-        Plugin_Log("INFO", "§dKaMC§aUtility§bPlugin §fv" + Version + " 正在加载...");
+        Plugin_Log("INFO", Plugin_Name + " §fv" + Version + " 正在加载...");
 
         Check_Data_Folder();
         if (!isEnabled()) {
             return;
         }
 
+        Class_Listeners = new Listeners();
+
         Class_Commands = new Commands();
         Class_Commands.Register_Commands();
 
-        Class_Listeners = new Listeners();
+        Class_TabCompleters = new TabCompleters();
 
         Plugin_Log("INFO", "§dKaMC§a实用§b插件§a已启用!");
     }
 
     @Override
     public void onDisable() {
+        Class_Listeners.Unregister();
         Plugin_Log("INFO", "§dKaMC§a实用§b插件§4已禁用!");
     }
 

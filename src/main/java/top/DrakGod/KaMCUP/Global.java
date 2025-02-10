@@ -23,6 +23,7 @@ public interface Global {
     public Logger Server_Logger = Server.getLogger();
     public Logger Plugin_Logger = Bukkit.getLogger();
     public CommandSender Console = Server.getConsoleSender();
+    public String Plugin_Name = "§dKaMC§aUtility§bPlugin";
 
     public default <T extends JavaPlugin> T Get_Plugin(@Nonnull Class<T> clazz) {
         return Main.getPlugin(clazz);
@@ -61,7 +62,18 @@ public interface Global {
         } else if (Mode.equalsIgnoreCase("ERROR")) {
             Msg = "§c" + Msg;
         }
-        Console.sendMessage("§6[§dKaMC§aUtility§bPlugin§6] " + Msg);
+        Console.sendMessage("§6[" + Plugin_Name + "§6] " + Msg);
+    }
+
+    public default void Module_Log(String Mode, String Module_Name, String Msg) {
+        if (Mode.equalsIgnoreCase("INFO")) {
+            Msg = "§f" + Msg;
+        } else if (Mode.equalsIgnoreCase("WARN")) {
+            Msg = "§e" + Msg;
+        } else if (Mode.equalsIgnoreCase("ERROR")) {
+            Msg = "§c" + Msg;
+        }
+        Console.sendMessage("§6[" + Plugin_Name + "§6] §6[§f" + Module_Name + "§6] " + Msg);
     }
 
     public default YamlConfiguration Get_Data(String File_Name) {

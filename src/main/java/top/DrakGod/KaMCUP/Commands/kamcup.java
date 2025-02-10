@@ -13,6 +13,7 @@ public class kamcup implements KaMCCommand {
     public Commands Class_Commands;
     public HashMap<String, Command> Commands;
 
+    @Override
     public KaMCCommand Init() {
         Main Main = Get_Main();
         Class_Commands = Main.Class_Commands;
@@ -21,10 +22,12 @@ public class kamcup implements KaMCCommand {
         return this;
     }
 
+    @Override
     public String Get_Command_Name() {
         return "kamcup";
     }
 
+    @Override
     public boolean On_Command(Main Main, CommandSender Sender, String Label, String[] Args) {
         String[] New_Args = Args;
         Command SubCommand = Commands.get("help");

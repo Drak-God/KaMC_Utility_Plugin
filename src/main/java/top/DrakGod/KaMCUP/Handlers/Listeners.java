@@ -1,6 +1,5 @@
 package top.DrakGod.KaMCUP.Handlers;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +14,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import top.DrakGod.KaMCUP.Global;
 
+@SuppressWarnings("unchecked")
 public class Listeners implements Listener, Global {
     public List<Supplier<Boolean>> Second_Update_Suppliers = new ArrayList<>();
     public BukkitRunnable Second_Update = new BukkitRunnable() {
@@ -61,8 +61,7 @@ public class Listeners implements Listener, Global {
             @Override
             public void execute(Listener Listener, Event Event) {
                 try {
-                    Method Accept_Method = Consumer.getClass().getMethod("accept", Object.class);
-                    Accept_Method.invoke(Consumer, Event);
+                    ((Consumer<Event>) Consumer).accept(Event);
                 } catch (Exception e) {
                     Module_Log("WARN", "EventExecutor.execute", "运行" + Consumer.toString() + "事件时发生错误" + e.toString());
                 }

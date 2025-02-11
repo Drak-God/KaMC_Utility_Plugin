@@ -14,12 +14,14 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
 import top.DrakGod.KaMCUP.Main;
+import top.DrakGod.KaMCUP.Commands.kamcupCommands.kamcupCommand;
 import top.DrakGod.KaMCUP.Handlers.Commands;
 
 @SuppressWarnings("deprecation")
 public class help implements KaMCCommand {
     public Commands Class_Commands;
     public HashMap<String, Command> Commands;
+    public HashMap<String, kamcupCommand> kamcup_Commands;
     public List<List<String>> Help_Pages;
     public Integer Help_Pages_Number;
 
@@ -28,6 +30,9 @@ public class help implements KaMCCommand {
         Main Main = Get_Main();
         Class_Commands = Main.Class_Commands;
         Commands = Class_Commands.Commands;
+
+        HashMap<String, KaMCCommand> Command_Classes = Class_Commands.Command_Classes;
+        kamcup_Commands = ((kamcup) Command_Classes.get("kamcup")).kamcup_Command_Classes;
         return this;
     }
 
@@ -38,7 +43,6 @@ public class help implements KaMCCommand {
 
     @Override
     public List<String> On_TabComplete(Main Main, CommandSender Sender, String Label, String[] Args) {
-        System.out.println(Args);
         if (Args.length == 1) {
             Reload_Help_Pages(Sender);
             IntStream Page_Numbers = IntStream.rangeClosed(1, Help_Pages_Number);
@@ -74,15 +78,23 @@ public class help implements KaMCCommand {
 
         Sender.sendMessage("§e----- === " + Plugin_Name + "§6帮助 §e=== -----");
         Sender.sendMessage("§e====== ------ §6<>为必填 []为选填 §e------ ======");
+
         for (String Name : Help_Pages.get(Page_Number - 1)) {
-            Command HelpCommand = Commands.get(Name);
-            TextComponent Msg = new TextComponent(
-                    "§6" + HelpCommand.getUsage() + " §e-§6 " + HelpCommand.getDescription());
+            String Out = "";
+            if (Commands.containsKey(Name)) {
+                Command HelpCommand = Commands.get(Name);
+                Out = "§6" + HelpCommand.getUsage() + " §e-§6 " + HelpCommand.getDescription();
+            } else {
+                kamcupCommand HelpCommand = kamcup_Commands.get(Name);
+                Out = "§6" + HelpCommand.Get_Usage() + " §e-§6 " + HelpCommand.Get_Description();
+                Name = "kamcup " + Name;
+            }
+            TextComponent Msg = new TextComponent(Out);
             Msg.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/" + Name));
             Sender.spigot().sendMessage(Msg);
         }
-        ComponentBuilder Msg = new ComponentBuilder();
 
+        ComponentBuilder Msg = new ComponentBuilder();
         boolean Last_Page_Error = Page_Number - 1 < 1;
         String Last_Page_Button_Color = Last_Page_Error ? "§7" : "§6";
         Integer Last_Page_Number = Last_Page_Error ? Help_Pages_Lenth : Page_Number - 1;
@@ -111,11 +123,15 @@ public class help implements KaMCCommand {
     public void Reload_Help_Pages(CommandSender Sender) {
         HashMap<String, String> Command_Permissions = Class_Commands.Command_Permissions;
 
-        HashMap<String, Command> New_Commands = new HashMap<>();
+        List<String> New_Commands = new ArrayList<>();
         for (String Name : Commands.keySet()) {
-            Command Command = Commands.get(Name);
             if (Sender.hasPermission(Command_Permissions.get(Name))) {
-                New_Commands.put(Name, Command);
+                New_Commands.add(Name);
+            }
+        }
+        for (String Name : kamcup_Commands.keySet()) {
+            if (Sender.hasPermission("kamcup.commands.kamcup." + Name)) {
+                New_Commands.add(Name);
             }
         }
 
@@ -123,7 +139,7 @@ public class help implements KaMCCommand {
         Help_Pages_Number = (int) Math.ceil(Commands_Lenth / 6F);
         Help_Pages = new ArrayList<>();
 
-        Iterator<String> Iterator = New_Commands.keySet().iterator();
+        Iterator<String> Iterator = New_Commands.iterator();
         for (int i = 0; i < Help_Pages_Number; i++) {
             List<String> Help_Page = new ArrayList<>();
             int Page_Commands_Number = Math.min(Commands_Lenth - i * 6, 6);

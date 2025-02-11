@@ -21,7 +21,6 @@ public interface Global {
     public Server Server = Bukkit.getServer();
     public PluginManager Plugin_Manager = Server.getPluginManager();
     public Logger Server_Logger = Server.getLogger();
-    public Logger Plugin_Logger = Bukkit.getLogger();
     public CommandSender Console = Server.getConsoleSender();
     public String Plugin_Name = "§dKaMC§aUtility§bPlugin";
 

@@ -60,3 +60,15 @@ permissions:
   kamcup.commands.uuid:
     description: 授予执行/uuid权限
     default: false
+  kamcup.commands.kamcup.*:
+    description: 授予执行/kamcup附属命令权限
+    default: false
+    children:
+      kamcup.commands.kamcup.reload: true
+      kamcup.commands.kamcup.version: true
+  kamcup.commands.kamcup.reload:
+    description: 授予执行/kamcup reload权限
+    default: false
+  kamcup.commands.kamcup.version:
+    description: 授予执行/kamcup version权限
+    default: false

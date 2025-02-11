@@ -37,9 +37,9 @@ public class Commands implements CommandExecutor, Global {
 
     public void Register_Commands() {
         Command_Classes = new HashMap<>();
+        new kamcup().Register_Command();
         new car().Register_Command();
         new help().Register_Command();
-        new kamcup().Register_Command();
         new uuid().Register_Command();
     }
 

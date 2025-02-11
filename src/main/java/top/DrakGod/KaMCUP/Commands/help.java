@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-
-import com.google.common.collect.Range;
 
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -22,6 +21,7 @@ public class help implements KaMCCommand {
     public Commands Class_Commands;
     public HashMap<String, Command> Commands;
     public List<List<String>> Help_Pages;
+    public Integer Help_Pages_Number;
 
     @Override
     public KaMCCommand Init() {
@@ -38,7 +38,17 @@ public class help implements KaMCCommand {
 
     @Override
     public List<String> On_TabComplete(Main Main, CommandSender Sender, String Label, String[] Args) {
-        return IntStream.rangeClosed(1, ).Get_List();
+        System.out.println(Args);
+        if (Args.length == 1) {
+            Reload_Help_Pages(Sender);
+            IntStream Page_Numbers = IntStream.rangeClosed(1, Help_Pages_Number);
+            List<String> TabComplete = Page_Numbers
+                    .mapToObj(String::valueOf)
+                    .collect(Collectors.toList());
+            return TabComplete;
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     @Override
@@ -110,7 +120,7 @@ public class help implements KaMCCommand {
         }
 
         Integer Commands_Lenth = New_Commands.size();
-        Integer Help_Pages_Number = (int) Math.ceil(Commands_Lenth / 6F);
+        Help_Pages_Number = (int) Math.ceil(Commands_Lenth / 6F);
         Help_Pages = new ArrayList<>();
 
         Iterator<String> Iterator = New_Commands.keySet().iterator();

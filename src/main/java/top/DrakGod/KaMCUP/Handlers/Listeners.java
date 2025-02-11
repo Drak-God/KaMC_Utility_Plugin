@@ -1,11 +1,16 @@
 package top.DrakGod.KaMCUP.Handlers;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.EventExecutor;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import top.DrakGod.KaMCUP.Global;
@@ -18,14 +23,12 @@ public class Listeners implements Listener, Global {
             Iterator<Supplier<Boolean>> Iterator = Second_Update_Suppliers.iterator();
             while (Iterator.hasNext()) {
                 Supplier<Boolean> Supplier = Iterator.next();
-                boolean Out;
+                boolean Out = false;
                 String Error = "";
-
                 try {
                     Out = Supplier.get();
                 } catch (Exception e) {
                     Error = e.toString();
-                    Out = false;
                 }
 
                 if (!Out) {
@@ -53,7 +56,21 @@ public class Listeners implements Listener, Global {
         Second_Update_Suppliers.remove(Supplier);
     }
 
-    public void Register_Event(Supplier<> Listener) {
-        Second_Update_Suppliers.clear();
+    public EventExecutor Get_Event_Executor(Consumer<? extends Event> Consumer) {
+        return new EventExecutor() {
+            @Override
+            public void execute(Listener Listener, Event Event) {
+                try {
+                    Method Accept_Method = Consumer.getClass().getMethod("accept", Object.class);
+                    Accept_Method.invoke(Consumer, Event);
+                } catch (Exception e) {
+                    Module_Log("WARN", "EventExecutor.execute", "运行" + Consumer.toString() + "事件时发生错误" + e.toString());
+                }
+            }
+        };
+    }
+
+    public void Register_Event(Class<? extends Event> Event_Type, EventExecutor Event_Executor) {
+        Plugin_Manager.registerEvent(Event_Type, this, EventPriority.NORMAL, Event_Executor, Get_Main());
     }
 }

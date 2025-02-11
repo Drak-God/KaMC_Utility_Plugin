@@ -11,11 +11,13 @@ import java.util.jar.JarFile;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import top.DrakGod.KaMCUP.Handlers.*;
+import top.DrakGod.KaMCUP.Functions.*;
 
 @SuppressWarnings("deprecation")
 public class Main extends JavaPlugin implements Global {
     public String Version;
 
+    public CheckUpdate Class_CheckUpdate;
     public Commands Class_Commands;
     public Listeners Class_Listeners;
     public TabCompleters Class_TabCompleters;
@@ -30,19 +32,21 @@ public class Main extends JavaPlugin implements Global {
             return;
         }
 
+        Class_CheckUpdate = new CheckUpdate();
         Class_Listeners = new Listeners();
+        Class_TabCompleters = new TabCompleters();
 
         Class_Commands = new Commands();
         Class_Commands.Register_Commands();
-
-        Class_TabCompleters = new TabCompleters();
 
         Plugin_Log("INFO", "§dKaMC§a实用§b插件§a已启用!");
     }
 
     @Override
     public void onDisable() {
+        Class_CheckUpdate.Unregister();
         Class_Listeners.Unregister();
+
         Plugin_Log("INFO", "§dKaMC§a实用§b插件§4已禁用!");
     }
 

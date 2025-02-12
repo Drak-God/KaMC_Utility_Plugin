@@ -12,10 +12,16 @@ public interface kamcupCommand extends KaMCCommand {
 
     public String Get_Description();
 
+    public String Get_Permission();
+
     public String Get_Usage();
 
+    public default String Get_Full_Name() {
+        return "kamcup " + Get_Command_Name();
+    }
+
     public default boolean Call(Main Main, CommandSender Sender, String Label, String[] Args) {
-        if (!Sender.hasPermission("kamcup.commands.kamcup." + Get_Command_Name())) {
+        if (!Sender.hasPermission(Get_Permission())) {
             Sender.sendMessage("§c你没有权限使用此命令");
             return true;
         }
@@ -29,6 +35,7 @@ public interface kamcupCommand extends KaMCCommand {
 
         Commands Class_Commands = Get_Main().Class_Commands;
         kamcup kamcup = (kamcup) Class_Commands.Command_Classes.get("kamcup");
-        kamcup.kamcup_Command_Classes.put(Command_Name, Command);
+        kamcup.Command_Classes.put(Command_Name, Command);
+        kamcup.Command_Permissions.put(Command_Name, Get_Permission());
     };
 }

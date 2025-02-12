@@ -24,6 +24,11 @@ public class reload implements kamcupCommand {
     }
 
     @Override
+    public String Get_Permission() {
+        return "kamcup.commands.kamcup.reload";
+    }
+
+    @Override
     public String Get_Usage() {
         return "/kamcup reload";
     }

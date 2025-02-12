@@ -48,6 +48,7 @@ permissions:
       kamcup.commands.help: true
       kamcup.commands.kamcup: true
       kamcup.commands.uuid: true
+      kamcup.commands.kamcup.*: true
   kamcup.commands.car:
     description: 授予执行/car权限
     default: true

@@ -41,6 +41,11 @@ public class Commands implements CommandExecutor, Global {
         new car().Register_Command();
         new help().Register_Command();
         new uuid().Register_Command();
+
+        Command_Classes.get("kamcup").Init();
+        Command_Classes.forEach((Name, Value) -> {
+            Value.Init();
+        });
     }
 
     @Override

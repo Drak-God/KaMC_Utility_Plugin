@@ -27,7 +27,7 @@ public interface KaMCCommand extends Global {
     }
 
     public default void Register_Command() {
-        KaMCCommand Command = Init();
+        KaMCCommand Command = this;
         String Command_Name = Get_Command_Name();
         Get_Main().Class_Commands.Command_Classes.put(Command_Name, Command);
     };

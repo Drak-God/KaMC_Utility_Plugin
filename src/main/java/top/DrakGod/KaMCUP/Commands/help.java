@@ -21,7 +21,8 @@ import top.DrakGod.KaMCUP.Handlers.Commands;
 public class help implements KaMCCommand {
     public Commands Class_Commands;
     public HashMap<String, Command> Commands;
-    public HashMap<String, kamcupCommand> kamcup_Commands;
+    public HashMap<String, KaMCCommand> Command_Classes;
+    public HashMap<String, String> Command_Permissions;
     public List<List<String>> Help_Pages;
     public Integer Help_Pages_Number;
 
@@ -31,8 +32,11 @@ public class help implements KaMCCommand {
         Class_Commands = Main.Class_Commands;
         Commands = Class_Commands.Commands;
 
-        HashMap<String, KaMCCommand> Command_Classes = Class_Commands.Command_Classes;
-        kamcup_Commands = ((kamcup) Command_Classes.get("kamcup")).kamcup_Command_Classes;
+        HashMap<String, KaMCCommand> Commands_Classes = Class_Commands.Command_Classes;
+        kamcup kamcup = (kamcup) Commands_Classes.get("kamcup");
+        Command_Classes = kamcup.Command_Classes;
+        Command_Permissions = kamcup.Command_Permissions;
+
         return this;
     }
 
@@ -82,13 +86,14 @@ public class help implements KaMCCommand {
         for (String Name : Help_Pages.get(Page_Number - 1)) {
             String Out = "";
             if (Commands.containsKey(Name)) {
-                Command HelpCommand = Commands.get(Name);
-                Out = "§6" + HelpCommand.getUsage() + " §e-§6 " + HelpCommand.getDescription();
+                Command Help_Command = Commands.get(Name);
+                Out = "§6" + Help_Command.getUsage() + " §f-§e " + Help_Command.getDescription();
             } else {
-                kamcupCommand HelpCommand = kamcup_Commands.get(Name);
-                Out = "§6" + HelpCommand.Get_Usage() + " §e-§6 " + HelpCommand.Get_Description();
-                Name = "kamcup " + Name;
+                kamcupCommand Help_Command = (kamcupCommand) Command_Classes.get(Name);
+                Out = "§6" + Help_Command.Get_Usage() + " §f-§e " + Help_Command.Get_Description();
+                Name = "" + Help_Command.Get_Full_Name();
             }
+
             TextComponent Msg = new TextComponent(Out);
             Msg.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/" + Name));
             Sender.spigot().sendMessage(Msg);
@@ -121,16 +126,9 @@ public class help implements KaMCCommand {
     }
 
     public void Reload_Help_Pages(CommandSender Sender) {
-        HashMap<String, String> Command_Permissions = Class_Commands.Command_Permissions;
-
         List<String> New_Commands = new ArrayList<>();
-        for (String Name : Commands.keySet()) {
+        for (String Name : Command_Classes.keySet()) {
             if (Sender.hasPermission(Command_Permissions.get(Name))) {
-                New_Commands.add(Name);
-            }
-        }
-        for (String Name : kamcup_Commands.keySet()) {
-            if (Sender.hasPermission("kamcup.commands.kamcup." + Name)) {
                 New_Commands.add(Name);
             }
         }

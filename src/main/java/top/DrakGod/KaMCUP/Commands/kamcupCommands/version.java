@@ -24,6 +24,11 @@ public class version implements kamcupCommand {
     }
 
     @Override
+    public String Get_Permission() {
+        return "kamcup.commands.kamcup.version";
+    }
+
+    @Override
     public String Get_Usage() {
         return "/kamcup version";
     }
@@ -41,7 +46,7 @@ public class version implements kamcupCommand {
         if (New_Version == null) {
             New_Version = "§c获取失败";
         }
-        Sender.sendMessage("§6当前版本: " + Now_Version + " §b最新版本: " + New_Version);
+        Sender.sendMessage("§6当前版本: " + Now_Version + " 最新版本: " + New_Version);
         return true;
     }
 }

@@ -27,9 +27,8 @@ public class uuid implements KaMCCommand {
                 TabComplete.add(player.getName());
             }
             return TabComplete;
-        } else {
-            return new ArrayList<>();
         }
+        return new ArrayList<>();
     }
 
     @Override
@@ -37,14 +36,14 @@ public class uuid implements KaMCCommand {
         if (Args.length == 1) {
             OfflinePlayer Player = (OfflinePlayer) Server.getOfflinePlayer(Args[0]);
             if (Player == null) {
-                Sender.sendMessage("§4玩家 " + Args[0] + " 不存在");
+                Sender.sendMessage("§c玩家 " + Args[0] + " 不存在");
                 return true;
             }
 
             Sender.sendMessage("玩家 " + Player.getName() + " 的UUID是" + Player.getUniqueId().toString());
-        } else {
-            Sender.sendMessage("§4命令用法:/uuid <Player>");
+            return true;
         }
+        Sender.sendMessage("§c命令用法:/uuid <Player>");
         return true;
     }
 }

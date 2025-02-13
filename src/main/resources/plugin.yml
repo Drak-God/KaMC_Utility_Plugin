@@ -1,6 +1,6 @@
 name: KaMC_Utility_Plugin
 main: top.DrakGod.KaMCUP.Main
-version: 1.0.0
+version: 1.0.1
 api-version: 1.20.6
 description: 这是一个专门为KaMC打造的插件
 authors: [Drakgod]
@@ -8,6 +8,11 @@ website: https://www.kamc.fun
 depend: [Essentials]
 
 commands:
+  bank:
+    description: 银行功能,可取可存
+    usage: /bank <extract|save> [all|hand|money]
+    aliases: [kabank]
+    permission: kamcup.commands.bank
   car:
     description: 领取一个矿车,冷却10秒
     usage: /car
@@ -44,11 +49,15 @@ permissions:
     description: 授予执行命令权限
     default: false
     children:
+      kamcup.commands.bank: true
       kamcup.commands.car: true
       kamcup.commands.help: true
       kamcup.commands.kamcup: true
       kamcup.commands.uuid: true
       kamcup.commands.kamcup.*: true
+  kamcup.commands.bank:
+    description: 授予执行/bank权限
+    default: true
   kamcup.commands.car:
     description: 授予执行/car权限
     default: true

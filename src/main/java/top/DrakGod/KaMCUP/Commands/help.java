@@ -54,9 +54,8 @@ public class help implements KaMCCommand {
                     .mapToObj(String::valueOf)
                     .collect(Collectors.toList());
             return TabComplete;
-        } else {
-            return new ArrayList<>();
         }
+        return new ArrayList<>();
     }
 
     @Override

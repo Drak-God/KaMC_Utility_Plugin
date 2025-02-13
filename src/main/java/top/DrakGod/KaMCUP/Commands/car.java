@@ -44,7 +44,7 @@ public class car implements KaMCCommand {
 
             Minecart.setMaxSpeed(65536);
             Player.removeScoreboardTag("Cared");
-            Player.sendTitle("§a欢迎乘坐§bKaMC§e快速列车", "§4如果被清除,请重新执行/car");
+            Player.sendTitle("§a欢迎乘坐§bKaMC§e快速列车", "§c如果被清除,请重新执行/car");
         }
     }
 
@@ -122,7 +122,7 @@ public class car implements KaMCCommand {
                 Sender.sendMessage("§c冷却中，剩余§d" + Integer.toString(Wait_Time) + "秒");
             }
         } else {
-            Sender.sendMessage("§4此命令仅可由玩家执行");
+            Sender.sendMessage("§c此命令仅可由玩家执行");
         }
         return true;
     }

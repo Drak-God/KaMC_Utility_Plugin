@@ -10,6 +10,9 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.earth2me.essentials.Essentials;
+
 import top.DrakGod.KaMCUP.Handlers.*;
 import top.DrakGod.KaMCUP.Functions.*;
 
@@ -22,6 +25,8 @@ public class Main extends JavaPlugin implements Global {
     public Listeners Class_Listeners;
     public TabCompleters Class_TabCompleters;
 
+    public Essentials Essentials;
+
     @Override
     public void onEnable() {
         Version = getDescription().getVersion();
@@ -29,6 +34,13 @@ public class Main extends JavaPlugin implements Global {
 
         Check_Data_Folder();
         if (!isEnabled()) {
+            return;
+        }
+
+        Essentials = Get_Plugin(Essentials.class);
+        if (Essentials == null) {
+            Plugin_Log("ERROR", "未检测到EssentialsX插件");
+            setEnabled(false);
             return;
         }
 

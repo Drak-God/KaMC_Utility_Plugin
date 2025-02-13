@@ -32,6 +32,10 @@ public interface Global {
         return Get_Plugin(Main.class);
     }
 
+    public static Main Get_Main_Static() {
+        return Main.getPlugin(Main.class);
+    }
+
     public default File Get_Data_Folder() {
         return Get_Main().getDataFolder();
     }

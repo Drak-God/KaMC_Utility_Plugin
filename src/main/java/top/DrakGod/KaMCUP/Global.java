@@ -3,9 +3,14 @@ package top.DrakGod.KaMCUP;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import javax.annotation.Nonnull;
@@ -111,5 +116,24 @@ public interface Global {
         } catch (IOException e) {
             Plugin_Log("ERROR", "无法保存数据文件: " + File_Name + " " + e.toString());
         }
+    }
+
+    public default String String_BigDecimal(BigDecimal Denomination) {
+        Denomination = Denomination.setScale(2, RoundingMode.UP);
+
+        NumberFormat Number_Format = NumberFormat.getInstance(Locale.US);
+        DecimalFormat Decimal_Format = (DecimalFormat) Number_Format;
+
+        StringBuilder Pattern = new StringBuilder("#");
+        int Denomination_Length = Denomination.toPlainString().replaceAll("\\..*", "").length();
+        int Separator_Count = (Denomination_Length - 1) / 3;
+        for (int i = 0; i < Separator_Count; i++) {
+            Pattern.append(",###");
+        }
+        Pattern.append(".##");
+        Decimal_Format.applyPattern(Pattern.toString());
+    
+        BigDecimal String_Denomination = Denomination.stripTrailingZeros();
+        return Decimal_Format.format(String_Denomination);
     }
 }

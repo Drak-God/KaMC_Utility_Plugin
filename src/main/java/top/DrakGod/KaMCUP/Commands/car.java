@@ -35,21 +35,30 @@ public class car implements KaMCCommand {
     }
 
     public void On_Player_Enter_Vehicle(VehicleEnterEvent Event) {
-        if (Event.getVehicle().getType() == EntityType.MINECART) {
-            Minecart Minecart = (Minecart) Event.getVehicle();
-            Player Player = (Player) Event.getEntered();
-            if (Player == null || !Player.getScoreboardTags().contains("Cared")) {
-                return;
-            }
-
-            Minecart.setMaxSpeed(65536);
-            Player.removeScoreboardTag("Cared");
-            Player.sendTitle("§a欢迎乘坐§bKaMC§e快速列车", "§c如果被清除,请重新执行/car");
+        if (Event.getVehicle().getType() != EntityType.MINECART) {
+            return;
         }
+        if (Event.getEntered().getType() != EntityType.PLAYER) {
+            return;
+        }
+
+        Minecart Minecart = (Minecart) Event.getVehicle();
+        Player Player = (Player) Event.getEntered();
+        if (Player == null || !Player.getScoreboardTags().contains("Cared")) {
+            return;
+        }
+
+        Minecart.setMaxSpeed(65536);
+        Player.removeScoreboardTag("Cared");
+        Player.sendTitle("§a欢迎乘坐§bKaMC§e快速列车", "§c如果被清除,请重新执行/car");
     }
 
     public void On_Minecart_Move(VehicleMoveEvent Event) {
-        if (!(Event.getVehicle() instanceof Minecart)) {
+        if (Event.getVehicle().getType() != EntityType.MINECART) {
+            return;
+        }
+
+        if (!(Event.getVehicle().getPassenger() instanceof Player)) {
             return;
         }
 

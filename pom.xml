@@ -6,7 +6,7 @@
 
     <groupId>top.DrakGod.KaMCUP</groupId>
     <artifactId>KaMC_Utility_Plugin</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <name>KaMC_Utility_Plugin</name>
 
     <properties>

@@ -18,35 +18,35 @@ public class PlayerMoney {
         return Get_Essentials().getUser(Player);
     }
 
-    public static Double Get_Money(Player Player) {
+    public static BigDecimal Get_Money(Player Player) {
         User User = Get_User(Player);
-        return User.getMoney().doubleValue();
+        return User.getMoney();
     }
 
-    public static boolean Set_Money(Player Player, Double Money) {
+    public static boolean Set_Money(Player Player, BigDecimal Money) {
         User User = Get_User(Player);
         try {
-            User.setMoney(BigDecimal.valueOf(Money));
+            User.setMoney(Money);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
 
-    public static boolean Add_Money(Player Player, Double Money) {
+    public static boolean Add_Money(Player Player, BigDecimal Money) {
         User User = Get_User(Player);
         try {
-            User.setMoney(BigDecimal.valueOf(Get_Money(Player) + Money));
+            User.setMoney(Get_Money(Player).add(Money));
             return true;
         } catch (Exception e) {
             return false;
         }
     }
 
-    public static boolean Remove_Money(Player Player, Double Money) {
+    public static boolean Remove_Money(Player Player, BigDecimal Money) {
         User User = Get_User(Player);
         try {
-            User.setMoney(BigDecimal.valueOf(Get_Money(Player) - Money));
+            User.setMoney(Get_Money(Player).subtract(Money));
             return true;
         } catch (Exception e) {
             return false;

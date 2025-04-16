@@ -1,7 +1,7 @@
 name: KaMC_Utility_Plugin
 main: top.DrakGod.KaMCUP.Main
-version: 1.0.2
-api-version: 1.20.6
+version: 1.0.3
+api-version: 1.21.4
 description: 这是一个专门为KaMC打造的插件
 authors: [Drakgod]
 website: https://www.kamc.fun
